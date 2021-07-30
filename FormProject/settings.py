@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME':'FORM_APP',
         'USER':'postgres',
-        'PASSWORD':'Danilo1*PostgresqlServer',
+        'PASSWORD':'*Danilo1*PostgresqlServer',
         'HOST':'localhost',
         'PORT':5432,
     }
@@ -129,12 +129,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(locals())
+LOGGING : {
+    "version":1,
+    "disable_existing_loggers": False,
+    "handlers":{"console":{"class":"logging.StreamHandler"}},
+    "loggers":{
+        "":{"handlers":["console"],"level":"INFO"},
+        "django":{"handlers":["console"], "level":"INFO"},
+    },
+}
 
-heroku config:set DISABLE_COLLECTSTATIC=1
+django_heroku.settings(locals(), logging=False)
