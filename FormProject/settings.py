@@ -136,3 +136,4 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())
+heroku config:set DISABLE_COLLECTSTATIC=1
